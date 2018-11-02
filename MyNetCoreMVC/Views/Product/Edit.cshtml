@@ -1,0 +1,7 @@
+﻿@model MyNetCoreMVC.Models.Product
+<form action="Update" method="post">
+    <input type="hidden" name="Id" value="@Model.id" />
+    <input type="text" name="Name" value="@Model.name" placeholder="user name" />
+    <input type="text" name="Price" value="@Model.price" placeholder="price" />
+    <input type="submit" value="submit" />
+</form>

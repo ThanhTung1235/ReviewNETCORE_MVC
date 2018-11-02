@@ -1,0 +1,60 @@
+﻿@model List<Product>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index Page</h2>
+<a href="/Product/Craete">Crete new</a>
+<ul>
+    <li><input type="checkbox" id="check-all"/></li>
+    @foreach (var product in Model)
+    {
+        <li>
+            <div>
+                <input type="checkbox" style="display: inline" class="checkbox" value="@product.id" />
+                <span>@product.name - @product.price</span>
+                <a href="/Product/Edit?id=@product.id">Edit</a>
+                <a href="#" class="btn_delete" id="@product.id">Delete</a>
+            </div>
+            
+        </li>
+    }
+</ul>
+<button id="btn_delete_all">Delete</button>
+<script>
+    var listBtnDelete = document.getElementsByClassName("btn_delete");
+    for (var i = 0; i < listBtnDelete.length; i++) {
+        listBtnDelete[i].onclick = function (){
+            if (confirm("Are you sure ?")) {
+                var deletedId = this.id;
+                var currentDeleteButton = this;
+                var xmlHttp = new XMLHttpRequest();
+                xmlHttp.onreadystatechange = function() {
+                    if (this.readyState === 4 && this.status ===200) {
+                        currentDeleteButton.parentElement.remove();
+                        alert("Delete success");
+                    }
+                }
+                xmlHttp.open("DELETE", "/Product/Delete?id="+ deletedId, true);
+                xmlHttp.send();
+            }
+        }
+    }
+
+
+    var check_all = document.getElementById("check-all");
+    var check_box = document.getElementsByClassName("checkbox");
+    var btn_delete_all = document.getElementById("btn_delete_all");
+
+    check_all.onclick = function () {
+        for (var i = 0; i < check_box[i].length; i++) {
+            check_box[i].checked = this.checked;
+        }
+    }
+
+    btn_delete_all.onclick = function() {
+        var checkedItems = document.querySelectorAll(".checkbox:checked");
+    }                           
+
+    
+</script>
