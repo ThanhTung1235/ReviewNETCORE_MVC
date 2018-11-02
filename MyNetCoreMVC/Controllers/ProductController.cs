@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -75,9 +76,20 @@ namespace MyNetCoreMVC.Controllers
             return Redirect("Index");
         }
 
-        public IActionResult DeleteAll()
+        public IActionResult DeleteMulti(string ids)
         {
+            foreach (var id in ids.Split(","))
+            {
+                var exitProduct = _context.Products.Find(Convert.ToInt32(id));
+                if (exitProduct == null)
+                {
+                    return NotFound();
+                }
 
+                _context.Products.Remove(exitProduct);
+                _context.SaveChanges();
+
+            }
             return Redirect("Index");
         }
     }
